@@ -1,5 +1,3 @@
-import math, pyperclip
-
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 def encrypt(key, message):

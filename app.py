@@ -6,34 +6,18 @@ from passlib.hash import sha256_crypt
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from werkzeug.utils import secure_filename
-from flask import send_from_directory
-from flask_mail import Mail,Message
 import json
 import Encryption
-import os
 
-UPLOAD_FOLDER = 'static/images'
-ALLOWED_EXTENSIONS = {'jpg'}
 ENCRYPTION_KEY = 'JAHDFLKASDLKJFLKAJSDFLKJASNDLF'
 
 app = Flask(__name__)
 app.secret_key = 'Secret Key'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'flaskmail13579@gmail.com'
-app.config['MAIL_DEFAULT_SENDER'] = 'flaskmail13579@gmail.com'
-app.config['MAIL_PASSWORD'] = 'password_manager0329'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
 
 Bootstrap(app)
 db = SQLAlchemy(app)
-mail = Mail(app)
 
 #login page
 @app.route('/',methods=['POST','GET'])
@@ -220,41 +204,6 @@ def edit():
             })
         return json.dumps(query)
 
-#checks if there is a period in filename and it is in jpg format
-#only allows images in jpg format    
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-#route for uploading images
-#copied from flask documentation
-@app.route('/upload',methods=['POST','GET'])
-def upload():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part','danger')
-            return redirect(url_for('dashboard'))
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file','danger')
-            return redirect(url_for('dashboard'))
-        #setting filename based in the account id plus the original filename
-        file.filename = 'profile_pic'+str(session['account_id'])+'_'+file.filename
-        if file and allowed_file(file.filename):
-            account = AccountDetails.query.get(session['account_id'])
-            old_pic = 'static/images/'+account.profile_pic
-            #check the photo already exists and it is not the default profile pic
-            if os.path.exists(old_pic) and account.profile_pic != 'profile.png':
-                os.remove(old_pic)  
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) 
-            #updating the profile pic column in account_details tables
-            account.profile_pic = filename    
-            db.session.commit()
-        return redirect(url_for('dashboard'))
-
 #request of editing of personal information
 @app.route('/personal_info', methods=['POST','GET'])
 def personal_info():
@@ -294,20 +243,6 @@ def save_display():
         account.display = request.form['display_number']
         db.session.commit()
         return redirect(url_for('dashboard'))
-
-#function for sending mail through Flask Mail
-@app.route('/mail/<send_type>',methods=['POST','GET'])
-def send_mail(send_type):
-    if request.method == 'POST':
-        if send_type == 'report':
-            msg = Message('Problem from '+request.form['name'], recipients = ['flaskmail13579@gmail.com'])
-            msg.body = request.form['report']
-            mail.send(msg)
-        if send_type == 'suggestion':
-            msg = Message('Suggestion from '+request.form['name'], recipients = ['flaskmail13579@gmail.com'])
-            msg.body = request.form['suggestion']
-            mail.send(msg)
-    return redirect(url_for('dashboard'))
 
 #return a new format for dashboard if the screen width is less than 500
 @app.route('/responsive')
