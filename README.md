@@ -2,7 +2,7 @@
 
 Forget no more... created this web app to get in practice on using python flask <br>
 All data stored were encrypted. Dont you worry. <br>
-Hosted in heroku. Click on this [link](mb-password-manager.herokuapp.com/) to try though there are some issues in sending reports and suggestions.
+Hosted in heroku. Click on this [link](https://mb-password-manager.herokuapp.com/) to try though there are some issues in sending reports and suggestions.
 
 Here are some snippets
 
