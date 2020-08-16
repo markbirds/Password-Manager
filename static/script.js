@@ -22,6 +22,7 @@ for(var i=1;i<=4;i++){
     }
     $('#display_box'+i.toString()).css({'border':'5px solid #363535'}); 
     $('#body').css(bg_key[display_number-1],bg_value[display_number-1]);
+
 }
 
 //responsive format 
