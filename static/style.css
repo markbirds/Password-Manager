@@ -1,0 +1,16 @@
+/* not active */
+.nav-pills .pill .nav-link:not(.active) {
+    background-color: white;
+    color: black;
+}
+
+/* active (faded) */
+.nav-pills .pill .nav-link {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+.center {
+  margin: auto;
+  width: 100px;
+  padding: 100px;
+}
