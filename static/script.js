@@ -174,29 +174,33 @@ $(document).ready(function(){
     //changing password (settings modal)
     $('#change_pass').click(function(){
         var old_pass = $('#change_old_pass').val().trim()
-        var new_pass = $('#change_new_pass').val().trim()
-        var confirm_pass = $('#change_confirm_pass').val().trim()
-        if(old_pass && new_pass && confirm_pass){
-            $.post('/confirm_old_pass',{
-            old_pass: old_pass
-        },function(data){
-            if(JSON.parse(data)['response']){
-                if(new_pass == confirm_pass){
-                    $.post('/change_pass',{
-                        new_pass: new_pass
-                    },function(status){
-                        console.log(status);
-                        $('#not_match').text('')
-                        $('#incorrect_old_pass').text('')
-                        $('#pass_changed').text('Password successfully changed.')
-                    })
+        if(old_pass=='test_password'){
+            $('#incorrect_old_pass').text('You cant change this password.');
+        }else{
+            var new_pass = $('#change_new_pass').val().trim()
+            var confirm_pass = $('#change_confirm_pass').val().trim()
+            if(old_pass && new_pass && confirm_pass){
+                $.post('/confirm_old_pass',{
+                old_pass: old_pass
+            },function(data){
+                if(JSON.parse(data)['response']){
+                    if(new_pass == confirm_pass){
+                        $.post('/change_pass',{
+                            new_pass: new_pass
+                        },function(status){
+                            console.log(status);
+                            $('#not_match').text('')
+                            $('#incorrect_old_pass').text('')
+                            $('#pass_changed').text('Password successfully changed.')
+                        })
+                    }else{
+                        $('#not_match').text('Passwords dont match.');
+                    }
                 }else{
-                    $('#not_match').text('Passwords dont match.');
+                    $('#incorrect_old_pass').text('Incorrect Password.');
                 }
-            }else{
-                $('#incorrect_old_pass').text('Incorrect Password.');
-            }
-        });
+            });
+        }
     }
     });
     //changing background display (settings modal)
