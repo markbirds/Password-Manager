@@ -61,7 +61,7 @@ class CreateForm(FlaskForm):
     likes_hobbies = StringField('Likes or hobbies',validators=[DataRequired()])
     username = StringField('Username',validators=[DataRequired(),Length(max=20)])
     password = PasswordField('Password',validators=[DataRequired(),EqualTo('confirm',message='Passwords do not match')])
-    confirm = PasswordField('Confirm Email')
+    confirm = PasswordField('Confirm Password')
 
 #account_details table
 class AccountDetails(db.Model):
