@@ -4,6 +4,13 @@ function onload_page(){
     $("#password_manager, #password_login").animate({'margin-top': '10%'},1000);
     }
 }
+
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
 //setting the border for saved display in display settings
 var display_number = $('#display_number').val();
 var bg_key = ["background-image","background-color","background-color","background-color"];
@@ -205,6 +212,48 @@ $(document).ready(function(){
         $('#body').css(bg_key[display_number-1],bg_value[display_number-1]);
     });
 
+    //sending problem (settings modal)
+    $('#report_send').click(function(){
+        var report = $('#report_textarea').val().trim();
+        var name = $('#save_name').val().trim()
+        if(report){
+        $('#report_textarea').val('');
+        $('#report_sent').html('<button class="btn btn-danger">'+
+                                    '<span class="spinner-border spinner-border-sm"></span>'+
+                                    ' Sending report. Please wait.'+
+                                '</button>');
+        $('#report_sent').addClass('py-3 text-center');     
+        $.post('/mail/report',{
+            name: name,
+            report: report
+        },function(){
+            $('#report_sent').html('<button class="btn btn-success">'+
+                                        'Report sent'+
+                                    '</button>');
+        });
+        }
+    });
+    //sending suggestions (settings modal)
+    $('#suggestion_send').click(function(){
+        var suggestion = $('#suggestion_textarea').val().trim();
+        var name = $('#save_name').val().trim()
+        if(suggestion){
+        $('#suggestion_textarea').val('');
+        $('#suggestion_sent').html('<button class="btn btn-danger">'+
+                                    '<span class="spinner-border spinner-border-sm"></span>'+
+                                    ' Sending suggestion. Please wait.'+
+                                '</button>');
+        $('#suggestion_sent').addClass('py-3 text-center');
+            $.post('/mail/suggestion',{
+                name: name,
+                suggestion: suggestion
+            },function(){
+                $('#suggestion_sent').html('<button class="btn btn-success">'+
+                                            'Suggestion sent'+
+                                        '</button>');
+            });
+        }
+    });
     // link in footer --> navigates into report section in settings modal
     $('#footer_suggestion').click(function(){
         $('#report_link').click();
