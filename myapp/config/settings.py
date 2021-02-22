@@ -1,0 +1,14 @@
+import os
+
+SECRET_KEY = os.environ.get('SECRET_KEY')
+SQLALCHEMY_TRACK_MODIFICATIONS = 'FALSE'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite3'
+UPLOAD_FOLDER = 'myapp/static/images'
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+MAIL_SERVER='smtp.gmail.com'
+MAIL_PORT = 465
+MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
+MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+MAIL_USE_TLS = False
+MAIL_USE_SSL = True

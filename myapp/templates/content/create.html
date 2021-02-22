@@ -1,0 +1,58 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block styles %}
+{{ super() }}
+<style>
+  .responsive{
+    padding: 50px 250px 20px;
+  }
+  @media screen and (max-width: 1200px) {
+  .responsive {
+    padding: 5%;
+  }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<body style="background-color: white;">
+{% include '/includes/_messages.html' %}
+<div class='container responsive'>
+  <div class="panel panel-default" style="border: 10px solid #5b6e7f;">
+  <div class="panel-heading" style="background-image: linear-gradient(90deg, #97d5c8 ,#5b6e7f);">
+    <h3 style="text-align: center;">Enter your account details</h3> 
+  </div>
+  <div class="panel-body" style="padding: 25px;">
+  <form action="" method="POST">
+      <div class="row">
+        <div class="col-sm-7 ">
+          {{ form.csrf_token }}
+          {{ wtf.form_field(form.name,placeholder='Enter name') }}
+          {{ wtf.form_field(form.address,placeholder='Enter address') }}
+          {{ wtf.form_field(form.email,placeholder='Enter email') }}
+          {{ wtf.form_field(form.username,placeholder='Enter username') }}
+          {{ wtf.form_field(form.password,placeholder='Enter password') }}
+          {{ wtf.form_field(form.confirm,placeholder='Confirm password') }}
+        </div>
+        <div class="col-sm-5">
+          {{ wtf.form_field(form.age,type='number',placeholder='Enter age') }}
+          {{ wtf.form_field(form.likes_hobbies,placeholder='Enter your likes or hobbies') }}
+        </div>
+      </div>
+      <div style="padding: 0px 5px;">
+          <div style="float: left;">
+            <a href="/">
+            <button type="button" class="btn btn-danger" style="padding: 10px 20px;">Back</button>
+            </a>
+          </div>
+          <div style="float: right;">
+            <button type="submit" class="btn btn-success" style="padding: 10px 20px;">Create</button>
+          </div>
+      </div>
+  </form>
+</div>
+</div>
+</div>
+</body>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Password Manager</title>
+{% endblock %}
+
+{% block content %}
+<body style="background-image: linear-gradient(90deg, #97d5c8 ,#5b6e7f);">
+{% include 'includes/_messages.html' %}
+<div class="container-fluid mt-5"> <!--container-->
+  <div class="row">
+  <div class="col-sm-6 m-auto ">
+    <div class="text-center mb-5">
+      <h3>Password Manager</h3>
+    </div>
+    <div class="shadow p-5 mb-4 bg-white"> <!--shadow-->
+      <div class="text-center py-3">
+        <h2>Login</h2>    
+      </div>
+      <form method="POST" action="/">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">      
+          <div class="text-center text-danger pt-2"></div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+        </div>
+        <div class="text-center">
+            <button type="submit" name="login" class="btn btn-dark">Login</button>   
+        </div>
+      </form>
+    </div> <!--shadow-->
+    <div class="text-center pb-5">
+      <a href="/create" class="text-dark">Create an account</a>
+    </div>
+  </div>
+  </div>
+</div> <!--container-->
+  
+</body>
+    
+{% endblock %}
