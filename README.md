@@ -8,7 +8,7 @@ Hosted in heroku. Click on this [link](https://mb-password-manager.herokuapp.com
 
 ```
 1. pip install -r requirements.txt
-2. python app.py
+2. flask run
 ```
 
 Here are some snippets
